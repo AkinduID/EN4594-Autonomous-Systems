@@ -30,6 +30,10 @@ class DroneKF(Node):
         self.trajectory = TrajectoryGenerator(trajectory_type='sine')
         self.noise_gen = NoiseGenerator(noise_std=0.5)
 
+        # Wait for Gazebo to fully spawn the drone
+        self.get_logger().info("Waiting for drone to spawn in Gazebo...")
+        time.sleep(2.0)  # Give Gazebo time to spawn the entity
+        
         # Start Loop
         self.timer = self.create_timer(self.dt, self.control_loop)
         self.start_time = time.time()
